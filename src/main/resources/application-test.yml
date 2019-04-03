@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
   tomcat:
     uri-encoding: UTF-8
     max-threads: 600
@@ -25,15 +25,14 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${file.path}
+    #spring.resources.static-locations无效是因为spring boot配置了拦截器，拦截器的配置把默认处理静态资源的配置给覆盖了，导致失效
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
 
 debug: true
 
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.trevor.dao
+  type-aliases-package: com.spg.admin.dao
   config-location: classpath:/mybatis-config.xml
 
-file:
-  path: /mnt/sdb/platform/zjut/special-student/
 

@@ -32,23 +32,23 @@ public class SuperAdminController {
     @Resource
     private SuperAdminServcie superAdminServcie;
 
-    @Resource
-    private HttpServletRequest request;
-
-
-
     @ApiOperation(value = "超级管理员登陆")
     @RequestMapping(value = "/admin/login", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public JsonEntity<String> login(@RequestBody @Validated SuperAdminLogin superAdminLogin){
         JsonEntity<SuperAdmin> login = superAdminServcie.login(superAdminLogin);
         if (login.getCode() > 0) {
-            Map<String, Object> map = TokenUtil.getMap("liubin", "liubingxfqrewqrtq");
-            String token = TokenUtil.generateToken(map);
-            SessionUtil.getSession().setAttribute("token" ,token);
-            return ResponseHelper.createInstance(token , MessageCodeEnum.LOGIN_SUCCESS);
+            SessionUtil.getSession().setAttribute("admin" ,login.getData());
+            return ResponseHelper.createInstanceWithOutData(MessageCodeEnum.LOGIN_SUCCESS);
         }else {
             return new JsonEntity<>(login.getCode() ,login.getMessage());
         }
+    }
+
+    @ApiOperation(value = "超级管理员退出")
+    @RequestMapping(value = "/admin/login/login/out", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public JsonEntity<String> loginOut(){
+        SessionUtil.getSession().removeAttribute("admin");
+        return ResponseHelper.createInstanceWithOutData(MessageCodeEnum.OPERATION_SUCCESS);
     }
 
 

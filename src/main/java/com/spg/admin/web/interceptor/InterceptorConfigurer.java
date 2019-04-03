@@ -1,7 +1,9 @@
 package com.spg.admin.web.interceptor;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
@@ -20,6 +22,17 @@ public class InterceptorConfigurer implements WebMvcConfigurer{
     @Resource
     private LoginInterceptor loginInterceptor;
 
+    /**
+     * 添加静态资源文件，外部可以直接访问地址
+     * @param registry
+     */
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        //需要配置1：----------- 需要告知系统，这是要被当成静态文件的！
+//        //第一个方法设置访问路径前缀，第二个方法设置资源路径
+//        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(corsInterceptor).addPathPatterns("/**");
@@ -35,13 +48,9 @@ public class InterceptorConfigurer implements WebMvcConfigurer{
                 .excludePathPatterns("/api/testLogin/login")
                 //排除错误页面
                 .excludePathPatterns("/error.html")
+                .excludePathPatterns("/login.html")
                 //排除超级管理员登陆
-                .excludePathPatterns("/admin/login")
-                //排除微信转发到微信登录页面/检查微信授权地址
-                .excludePathPatterns("/front/weixin/login/**")
-                //排除微信回调地址
-                .excludePathPatterns("/public/api/weixin/auth");
-
+                .excludePathPatterns("/admin/login");
     }
 
 }
