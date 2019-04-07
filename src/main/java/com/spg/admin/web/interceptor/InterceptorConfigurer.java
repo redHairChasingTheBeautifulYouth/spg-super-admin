@@ -49,6 +49,7 @@ public class InterceptorConfigurer implements WebMvcConfigurer{
                 //排除错误页面
                 .excludePathPatterns("/error.html")
                 .excludePathPatterns("/login.html")
+                .excludePathPatterns("/file/**")
                 //排除超级管理员登陆
                 .excludePathPatterns("/admin/login");
     }
